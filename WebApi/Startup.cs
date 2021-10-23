@@ -1,9 +1,14 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace School
+namespace WebApi
 {
     public class Startup
     {
@@ -23,14 +28,9 @@ namespace School
 
             app.UseRouting();
 
-            app.UseSwagger();
-
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
-
-            app.UseSwaggerUI(c =>
+            app.UseEndpoints(endpoints =>
             {
-                c.RoutePrefix = "swagger";
-                c.SwaggerEndpoint("v1/swagger/json", "School");
+                endpoints.MapControllers();
             });
         }
     }
