@@ -38,6 +38,12 @@ namespace SchoolProject
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
             app.UseSwaggerDocumentation();
+
+            using var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
+            {
+                var context = serviceScope.ServiceProvider.GetService<SchoolContext>();
+                context.Database.Migrate();
+            }
         }
     }
 }
