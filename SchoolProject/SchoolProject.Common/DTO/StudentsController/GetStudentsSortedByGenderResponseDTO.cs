@@ -1,11 +1,13 @@
-﻿using System.Collections.Generic;
-
-namespace SchoolProject.Common.DTO.StudentsController
+﻿namespace SchoolProject.Common.DTO.StudentsController
 {
-    public class GetStudentsSortedByGenderResponseDTO : IPaging
+    /// <summary>
+    /// Represents get students sorted by gender response data transport object.
+    /// </summary>
+    public class GetStudentsSortedByGenderResponseDTO
     {
-        public int Page { get; set; }
-        public int Limit { get; set; }
-        public List<StudentsDTO> Students { get; set; }
+        /// <summary>
+        /// List of students.
+        /// </summary>
+        public StudentDTO[] Students { get; set; }
     }
 }

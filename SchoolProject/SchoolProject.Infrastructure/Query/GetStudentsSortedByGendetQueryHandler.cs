@@ -1,103 +1,95 @@
-﻿using MediatR;
-using SchoolProject.Common.DTO;
+﻿using SchoolProject.Common.DTO;
 using SchoolProject.Common.DTO.StudentsController;
 using SchoolProject.Common.Enums;
 using SchoolProject.Infrastructure.Cache;
 using SchoolProject.Infrastructure.Database;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace SchoolProject.Infrastructure.Query
 {
-    public class GetStudentsSortedByGendetQueryHandler : IRequestHandler<GetStudentsSortedByGenderQuery, GetStudentsSortedByGenderResponseDTO>
+    /// <summary>
+    /// Represents <see cref="GetStudentsSortedByGenderQuery"/> handler.
+    /// </summary>
+    public class GetStudentsSortedByGendetQueryHandler : AQueryHandler<GetStudentsSortedByGenderQuery, GetStudentsSortedByGenderResponseDTO>
     {
-        private readonly SchoolContext dbContext;
-        private readonly IRedisCacheService cacheService;
-
+        /// <summary>
+        /// Create a new instance of a class <see cref="GetStudentsSortedByGendetQueryHandler"/>.
+        /// </summary>
+        /// <param name="context">Database context.</param>
+        /// <param name="redisCacheService">Redis cache service.</param>
         public GetStudentsSortedByGendetQueryHandler(SchoolContext context, IRedisCacheService redisCacheService)
+            : base(context, redisCacheService)
+        { }
+
+        protected override bool updateCacheRequired(GetStudentsSortedByGenderResponseDTO response)
         {
-            dbContext = context;
-            cacheService = redisCacheService;
+            return response?.Students != null;
         }
 
-        public async Task<GetStudentsSortedByGenderResponseDTO> Handle(GetStudentsSortedByGenderQuery request, CancellationToken cancellationToken)
+        protected override string getCacheKey(GetStudentsSortedByGenderQuery request)
         {
-            var cacheKey = combineCahceKey(request);
+            return RedisKeyGenerator.GenerateStudentsKey(request.ClassGroup, request.SortingType);
+        }
 
-            var result = await cacheService.Get<GetStudentsSortedByGenderResponseDTO>(cacheKey);
-
-            if (result == null)
+        protected override GetStudentsSortedByGenderResponseDTO executeQuery(GetStudentsSortedByGenderQuery request)
+        {
+            return new GetStudentsSortedByGenderResponseDTO()
             {
-                result = new GetStudentsSortedByGenderResponseDTO()
-                {
-                    Page = request.Page,
-                    Limit = request.Limit,
-                    Students = new List<StudentsDTO>()
-                };
-                var startPosition = request.Page * request.Limit;
-
-                var students = getStudents(request.SortingType, request.ClassGroup, startPosition, request.Limit);
-
-                if (students != null &&
-                    students.Count > 0)
-                {
-                    result.Students = students;
-
-                    await cacheService.Set(cacheKey, result);
-                }
-            }
-
-            return result;
+                Students = getStudents(request.SortingType, request.ClassGroup)
+            };
         }
 
-        private List<StudentsDTO> getStudents(ESortingType sortingType, char classGroup, int startPosition, int limit)
+        private StudentDTO[] getStudents(ESortingType sortingType, char classGroup)
         {
+            StudentDTO[] result;
+
             switch (sortingType)
             {
                 case ESortingType.Ascending:
                     {
-                        return dbContext.Students.Where(s => s.SchoolClass.Group == classGroup)
-                                                 .OrderBy(s => s.Gender)
-                                                 .Skip(startPosition)
-                                                 .Take(limit)
-                                                 .Select(s => new StudentsDTO
-                                                 {
-                                                     Name = s.Name,
-                                                     LastName = s.LastName,
-                                                     Gender = s.Gender,
-                                                     LanguageGroup = s.LanguageGroup,
-                                                     SchoolClassGroup = s.SchoolClass.Group
-                                                 })
-                                                 .ToList();
+                        result = dbContext.Students.Where(s => s.SchoolClass.Group == classGroup)
+                                                   ?.OrderBy(s => s.Gender)
+                                                   ?.Select(s => new StudentDTO
+                                                   {
+                                                       Id = s.ID,
+                                                       Name = s.Name,
+                                                       LastName = s.LastName,
+                                                       Gender = s.Gender,
+                                                       LanguageGroup = s.LanguageGroup,
+                                                       SchoolClassGroup = s.SchoolClass.Group,
+                                                       SchoolClassIdentifier = s.SchoolClass.ID
+                                                   })
+                                                   ?.ToArray();
+
+                        break;
                     }
                 case ESortingType.Descending:
                     {
-                        return dbContext.Students.Where(s => s.SchoolClass.Group == classGroup)
-                                                 .OrderByDescending(s => s.Gender)
-                                                 .Skip(startPosition)
-                                                 .Take(limit)
-                                                 .Select(s => new StudentsDTO
-                                                 {
-                                                     Name = s.Name,
-                                                     LastName = s.LastName,
-                                                     Gender = s.Gender,
-                                                     LanguageGroup = s.LanguageGroup,
-                                                     SchoolClassGroup = s.SchoolClass.Group
-                                                 })
-                                                 .ToList();
+                        result = dbContext.Students.Where(s => s.SchoolClass.Group == classGroup)
+                                                   ?.OrderByDescending(s => s.Gender)
+                                                   ?.Select(s => new StudentDTO
+                                                   {
+                                                       Id = s.ID,
+                                                       Name = s.Name,
+                                                       LastName = s.LastName,
+                                                       Gender = s.Gender,
+                                                       LanguageGroup = s.LanguageGroup,
+                                                       SchoolClassGroup = s.SchoolClass.Group,
+                                                       SchoolClassIdentifier = s.SchoolClass.ID
+                                                   })
+                                                   ?.ToArray();
+
+                        break;
                     }
                 default:
                     {
-                        return new List<StudentsDTO>();
+                        result = new StudentDTO[0];
+
+                        break;
                     }
             }
-        }
 
-        private string combineCahceKey(GetStudentsSortedByGenderQuery request)
-        {
-            return $"{request.ClassGroup}{request.SortingType}{request.Page}{request.SortingType}";
+            return result ?? new StudentDTO[0];
         }
     }
 }

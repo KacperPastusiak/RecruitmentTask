@@ -1,13 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SchoolProject.Domain.DatabaseStructure;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SchoolProject.Infrastructure.Database
 {
+    /// <summary>
+    /// Represents school database context.
+    /// </summary>
     public class SchoolContext : DbContext
     {
+        /// <summary>
+        /// Create a new instance of a class <see cref="SchoolContext"/>.
+        /// </summary>
+        /// <param name="options">Database context options.</param>
         public SchoolContext(DbContextOptions<SchoolContext> options)
             : base(options)
         { }
@@ -18,7 +22,16 @@ namespace SchoolProject.Infrastructure.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<SchoolClass>().ToTable("SchoolClass");
+            modelBuilder.Entity<SchoolClass>()
+                        .HasOne(sc => sc.Tutor)
+                        .WithOne(t => t.SchoolClass);
+
+            modelBuilder.Entity<SchoolClass>()
+                        .HasKey(sc => sc.ID);
+
+            modelBuilder.Entity<SchoolClass>()
+                        .HasIndex(sc => sc.Group)
+                        .IsUnique();
 
             modelBuilder.Entity<Tutor>()
                         .HasOne(t => t.SchoolClass)

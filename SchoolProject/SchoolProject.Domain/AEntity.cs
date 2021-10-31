@@ -2,6 +2,9 @@
 
 namespace SchoolProject.Domain
 {
+    /// <summary>
+    /// Represents base entity class.
+    /// </summary>
     public abstract class AEntity
     {
         protected static void CheckRule(IBusinessRule rule)

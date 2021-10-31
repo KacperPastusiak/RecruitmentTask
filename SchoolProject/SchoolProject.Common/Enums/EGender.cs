@@ -1,9 +1,18 @@
 ﻿namespace SchoolProject.Common.Enums
 {
+    /// <summary>
+    /// Represents gender type enum.
+    /// </summary>
     public enum EGender
     {
-        Unknown = 0,
+        /// <summary>
+        /// Male.
+        /// </summary>
         Male = 1,
+
+        /// <summary>
+        /// Female.
+        /// </summary>
         Female = 2
     }
 }

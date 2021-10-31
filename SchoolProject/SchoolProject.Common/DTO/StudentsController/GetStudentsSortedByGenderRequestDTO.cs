@@ -5,14 +5,8 @@ namespace SchoolProject.Common.DTO.StudentsController
     /// <summary>
     /// Represents get students by gender request data transport object.
     /// </summary>
-    public class GetStudentsSortedByGenderRequestDTO : IPaging
+    public class GetStudentsSortedByGenderRequestDTO
     {
-        /// <inheritdoc/>
-        public int Page { get; set; }
-
-        /// <inheritdoc/>
-        public int Limit { get; set; }
-
         /// <summary>
         /// School class group.
         /// </summary>

@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolProject.API", "SchoolProject\SchoolProject.API.csproj", "{50444EF9-1DC3-4964-B43C-C2C27063E6CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchoolProject.API", "SchoolProject\SchoolProject.API.csproj", "{50444EF9-1DC3-4964-B43C-C2C27063E6CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolProject.Infrastructure", "SchoolProject.Infrastructure\SchoolProject.Infrastructure.csproj", "{1F1DFFFF-5E0C-46ED-B1EC-902CBC193796}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchoolProject.Infrastructure", "SchoolProject.Infrastructure\SchoolProject.Infrastructure.csproj", "{1F1DFFFF-5E0C-46ED-B1EC-902CBC193796}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolProject.Common", "SchoolProject.Common\SchoolProject.Common.csproj", "{53F96DDE-BAC1-4380-AEBB-586D32A00BDE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchoolProject.Common", "SchoolProject.Common\SchoolProject.Common.csproj", "{53F96DDE-BAC1-4380-AEBB-586D32A00BDE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolProject.Domain", "SchoolProject.Domain\SchoolProject.Domain.csproj", "{FF61F844-3456-497C-BD28-77E6E02EE861}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchoolProject.Domain", "SchoolProject.Domain\SchoolProject.Domain.csproj", "{FF61F844-3456-497C-BD28-77E6E02EE861}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolProject.Test", "SchoolProject.Test\SchoolProject.Test.csproj", "{B9123032-3F72-4BD9-BFB0-7625A20D8F59}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{FF61F844-3456-497C-BD28-77E6E02EE861}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF61F844-3456-497C-BD28-77E6E02EE861}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF61F844-3456-497C-BD28-77E6E02EE861}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9123032-3F72-4BD9-BFB0-7625A20D8F59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9123032-3F72-4BD9-BFB0-7625A20D8F59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9123032-3F72-4BD9-BFB0-7625A20D8F59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9123032-3F72-4BD9-BFB0-7625A20D8F59}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -2,17 +2,25 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Company />
+    <Product />
   </PropertyGroup>
-
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	    <DocumentationFile>bin\Debug\netcoreapp2.2\SchoolProject.API.xml</DocumentationFile>
+	    <NoWarn>1701;1702;1705;1591</NoWarn>
+	    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="5.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="StackExchange.Redis" Version="2.2.79" />
-    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.2.3" />
-    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.2.3" />
-    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.2.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>

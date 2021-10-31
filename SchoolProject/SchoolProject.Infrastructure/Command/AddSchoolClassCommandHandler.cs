@@ -1,5 +1,5 @@
-﻿using MediatR;
-using SchoolProject.Domain.DatabaseStructure;
+﻿using SchoolProject.Domain.DatabaseStructure;
+using SchoolProject.Infrastructure.Cache;
 using SchoolProject.Infrastructure.Database;
 using System;
 using System.Threading;
@@ -7,22 +7,29 @@ using System.Threading.Tasks;
 
 namespace SchoolProject.Infrastructure.Command
 {
-    public class AddSchoolClassCommandHandler : IRequestHandler<AddSchoolClassCommand, Guid>
+    /// <summary>
+    /// Represetns <see cref="AddSchoolClassCommand"/> handler.
+    /// </summary>
+    public class AddSchoolClassCommandHandler : ACommandHandler<AddSchoolClassCommand, Guid>
     {
-        private readonly SchoolContext dbContext;
+        /// <summary>
+        /// Create a new instance of a class <see cref="AddSchoolClassCommandHandler"/>.
+        /// </summary>
+        /// <param name="context">Database context.</param>
+        /// <param name="redisCacheService">Redis cache service.</param>
+        public AddSchoolClassCommandHandler(SchoolContext context, IRedisCacheService redisCacheService)
+            : base(context, redisCacheService)
+        { }
 
-        public AddSchoolClassCommandHandler(SchoolContext context)
-        {
-            dbContext = context;
-        }
-
-        public async Task<Guid> Handle(AddSchoolClassCommand command, CancellationToken token)
+        public override async Task<Guid> Handle(AddSchoolClassCommand command, CancellationToken cancellationToken)
         {
             var sClass = SchoolClass.CreateSchoolClass(command.Group, command.LanguageGroups);
 
-            await dbContext.AddAsync(sClass);
+            await dbContext.AddAsync(sClass, cancellationToken);
 
-            await dbContext.SaveChangesAsync();
+            await dbContext.SaveChangesAsync(cancellationToken);
+
+            await cacheService.Clean(RedisKeyGenerator.StudentsKeyPrefix, cancellationToken);
 
             return sClass.ID;
         }

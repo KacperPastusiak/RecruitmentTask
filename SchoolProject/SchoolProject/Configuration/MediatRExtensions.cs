@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using SchoolProject.Infrastructure.Command;
+using SchoolProject.Infrastructure.Query;
 using System.Reflection;
 
 namespace SchoolProject.API.Configuration
@@ -18,7 +19,9 @@ namespace SchoolProject.API.Configuration
         {
             return new Assembly[]
             {
-                typeof(AddSchoolClassCommand).Assembly
+                typeof(AddSchoolClassCommand).Assembly,
+                typeof(AddStudentCommand).Assembly,
+                typeof(GetStudentsSortedByGenderQuery).Assembly
             };
         }
     }

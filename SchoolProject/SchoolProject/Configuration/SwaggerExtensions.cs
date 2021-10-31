@@ -14,14 +14,14 @@ namespace SchoolProject.API.Configuration
             {
                 options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
                 {
-                    Title = "School project Api",
+                    Title = "School project API",
                     Version = "v1"
                 });
 
-                //var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-                //var commentsFileName = Assembly.GetExecutingAssembly().GetName().Name + ".XML";
-                //var commentsFile = Path.Combine(baseDirectory, commentsFileName);
-                //options.IncludeXmlComments(commentsFile);
+                var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                var commentsFileName = Assembly.GetExecutingAssembly().GetName().Name + ".XML";
+                var commentsFile = Path.Combine(baseDirectory, commentsFileName);
+                options.IncludeXmlComments(commentsFile);
             });
 
             return services;

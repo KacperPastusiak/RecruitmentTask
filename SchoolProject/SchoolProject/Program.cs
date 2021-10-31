@@ -14,13 +14,16 @@ namespace SchoolProject
     public class Program
     {
         public static void Main(string[] args)
-        {
-            var host = CreateHostBuilder(args).Build();
+            => CreateHostBuilder(args).Build().Run();
 
-            CreateDb(host);
+        //public static void Main(string[] args)
+        //{
+        //    var host = CreateHostBuilder(args).Build();
 
-            host.Run();
-        }
+        //    CreateDb(host);
+
+        //    host.Run();
+        //}
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
@@ -29,22 +32,22 @@ namespace SchoolProject
                     webBuilder.UseStartup<Startup>();
                 });
 
-        private static void CreateDb(IHost host)
-        {
-            using (var scope = host.Services.CreateScope())
-            {
-                var services = scope.ServiceProvider;
+        //private static void CreateDb(IHost host)
+        //{
+        //    using (var scope = host.Services.CreateScope())
+        //    {
+        //        var services = scope.ServiceProvider;
 
-                try
-                {
-                    var context = services.GetRequiredService<SchoolContext>();
-                    context.Database.EnsureCreated();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-            }
-        }
+        //        try
+        //        {
+        //            var context = services.GetRequiredService<SchoolContext>();
+        //            context.Database.EnsureCreated();
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            Console.WriteLine(ex.Message);
+        //        }
+        //    }
+        //}
     }
 }

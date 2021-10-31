@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("SchoolProject.Test")]
 namespace SchoolProject.Domain.BusinessRule
 {
-    public class TwoLanguageGroupPerSchoolClassRule : IBusinessRule
+    internal class TwoLanguageGroupPerSchoolClassRule : IBusinessRule
     {
         private readonly List<string> languageGroups;
 
@@ -13,6 +15,9 @@ namespace SchoolProject.Domain.BusinessRule
 
         public bool IsBroken()
         {
+            if (languageGroups == null)
+                return true;
+
             return languageGroups.Count > 2;
         }
 
