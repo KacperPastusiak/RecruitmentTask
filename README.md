@@ -1,6 +1,6 @@
 # Uruchomienie projektu
 
-Project można uruchomić jako [aplikacja](#uruchomienie-jako-aplikacja) lub jako [kontener docker](#uruchom-jako-kontener-docker).
+Project można uruchomić jako [aplikacja](#uruchomienie-jako-aplikacja) lub jako [kontener docker](#uruchomienie-jako-kontener-docker).
 
 ## Uruchomienie jako aplikacja
 
@@ -24,7 +24,7 @@ Aby aplikacja mogła połączyć się z bazą redis należy odpowiednio zmienić
 
 ## Uruchomienie jako kontener docker
 
-Przed uruchomieniem aplikacji należy odpowiednio dostosować konfiguracje bazy [postgres](#konfiguracja-bazy-postgres-w-dockerze) oraz [redis](#konfiguracja=redis-w-dockerze). Po dostosowaniu ustawień do własnych preferencji należy uruchomić konsolę w miejscu `docker-compose.yml` a następnie wywołać w konsoli komendę `docker-compose up --build -d`.
+Przed uruchomieniem aplikacji należy odpowiednio dostosować konfiguracje bazy [postgres](#konfiguracja-bazy-postgres-w-dockerze) oraz [redis](#konfiguracja-redis-w-dockerze). Po dostosowaniu ustawień do własnych preferencji należy uruchomić konsolę w miejscu `docker-compose.yml` a następnie wywołać w konsoli komendę `docker-compose up --build -d`.
 
 ## Konfiguracja bazy postgres w dockerze
 
