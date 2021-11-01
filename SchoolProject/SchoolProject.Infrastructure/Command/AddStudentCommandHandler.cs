@@ -32,11 +32,21 @@ namespace SchoolProject.Infrastructure.Command
                                                 command.LanguageGroup,
                                                 schoolClass);
 
-            await dbContext.AddAsync(student, cancellationToken);
+            try
+            {
+                await dbContext.AddAsync(student, cancellationToken);
 
-            await dbContext.SaveChangesAsync(cancellationToken);
+                await dbContext.SaveChangesAsync(cancellationToken);
 
-            await cacheService.Clean(RedisKeyGenerator.SchoolClassKeyPrefix, cancellationToken);
+                await cacheService.Clean(RedisKeyGenerator.SchoolClassKeyPrefix, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException != null)
+                    throw ex.InnerException;
+
+                throw ex;
+            }
 
             return student.ID;
         }
